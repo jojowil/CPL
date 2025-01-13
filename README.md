@@ -29,21 +29,21 @@ This project attempts to implement CPL as it was available on Primos 21.x.
 
 [CPL User Guide](https://sysovl.info/pages/blobs/prime/devel/CPL%20Users%20Guide%20Rev%2021%20DOC4302-3LA%201987.pdf)
 
-Language details:
+### Language details:
 
 - Arguments have full support.
 - Directives are prefixes by &.
 - Functions are prefixed by \[ and closed with \].
 - Variables are surrounded by %.
 
-Command are processed as follows:
+### Command are processed as follows:
 
 - Abbreviation preprocessing (if applicable).
 - Variables values are substituted.
 - Function calls are evaluated.
 - All implied CALC calls are done for properly formatted expressions.
 
-Directives:
+### Directives:
 
 ```
 &ARGS     &BY         &CALL        &CHECK      &DATA
@@ -57,7 +57,7 @@ Directives:
 &UNTTL    &WARNTNG    &WATCH       &WHEN       &WHILE
 ```
 
-Functions:
+### Functions:
 
 ```
 ABBREV               AFTER      ATTRIB     BEFORE     CALC
