@@ -29,13 +29,61 @@ This project attempts to implement CPL as it was available on Primos 21.x.
 
 [CPL User Guide](https://sysovl.info/pages/blobs/prime/devel/CPL%20Users%20Guide%20Rev%2021%20DOC4302-3LA%201987.pdf)
 
+Language details:
+
+- Arguments have full support.
+- Directives are prefixes by &.
+- Functions are prefixed by \[ and closed with \].
+- Variables are surrounded by %.
+
+Command are processed as follows:
+
+- Abbreviation preprocessing (if applicable).
+- Variables values are substituted.
+- Function calls are evaluated.
+- All implied CALC calls are done for properly formatted expressions.
+
+Directives:
+
+```
+&ARGS     &BY         &CALL        &CHECK      &DATA
+&DEBUG    &DO         &ECHO        &ELSE       &END
+&ERROR    &EXECUTE    &EXPAND      &FAIL       &GOTO
+&IF       &IGNORE     &ITEMS       &LABEL      &LIST
+&MESSAGE  &NO_ECHO    &NO_EXECUTE  &NO.RETURN  &NO_WATCH
+&ON       &OTHERWISE  &REPEAT      &RESULT     &RETURN
+&REVERT   &ROUTTNE    &SELECT      &SEVERITY   &S1GNAL
+&STOP     &THEN       &TO          &TTY        &TTY_CONTINUE
+&UNTTL    &WARNTNG    &WATCH       &WHEN       &WHILE
+```
+
+Functions:
+
+```
+ABBREV               AFTER      ATTRIB     BEFORE     CALC
+CND_INFO             DATE       DIR        ENTRYNAME  EXISTS
+EXPAND_SEARCH_RULES  GET_VAR    GVPATH     HEX        INDEX
+KLMD                 KLMF       KLMT       LENGTH     MOD
+NULL                 OCTAL      OPEN_FILE  PATHNAME   QUERY
+QUOTE                READ_FILE  RESCAN     RESPONSE   RESUME
+SEARCH               SUBST      SUBSTR     TO_HEX     TO_OCTAL
+TRANSLATE            TRIM       UNQUOTE    VERIFY     WILD
+WRITE                FILE
+```
+
 The language looks like this:
 
-&if %severity$% = 1 &then &call error_routine
+`&IF %I% = \[MOD \[CALC %A% * %B%] %MODULUS%] &THEN &RETURN`
 
+`&if %severity$% = 1 &then &call error_routine`
+
+```
 &if (expression) &then &goto label
 &else &do
 &end
+```
 
-&if [exists %filename%|
-&then [open_file %filename% -mode status]
+```
+&if \[exists %filename%]
+&then \[open_file %filename% -mode status]
+```
