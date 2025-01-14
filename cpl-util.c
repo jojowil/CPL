@@ -9,7 +9,7 @@
  * @param fname string filename
  * @return pointer to bytes or NULL
  */
-char* cpl_readAllBytes(const char* fname) {
+char *cpl_readAllBytes(const char *fname) {
     FILE *file;
     long fileSize;
     char *buffer;
@@ -28,7 +28,7 @@ char* cpl_readAllBytes(const char* fname) {
     rewind(file);
 
     // get the mem
-    buffer = (char*)malloc(fileSize * sizeof(char) + 1);
+    buffer = (char *) malloc(fileSize * sizeof(char) + 1);
 
     // Read the entire file into the buffer
     bytesRead = fread(buffer, 1, fileSize, file);
