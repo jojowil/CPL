@@ -1,7 +1,3 @@
-//
-// Created by Bill Jojo on 1/25/25.
-//
-
 #ifndef CPL_CPL_ERROR_H
 #define CPL_CPL_ERROR_H
 
@@ -11,6 +7,6 @@ typedef struct {
     const char *text;
 } CPL_ERROR;
 
-const char *get_cpl_error(int);
-
+const char *get_cpl_error(int err);
+void print_cpl_error(int err, int line, const char *subst);
 #endif //CPL_CPL_ERROR_H
