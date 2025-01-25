@@ -14,6 +14,7 @@
 #include <stddef.h>
 
 #include "git-banned.h"
+#include "cpl-error.h"
 #include "cpl-enums.h"
 #include "cpl-strings.h"
 #include "cpl-util.h"
