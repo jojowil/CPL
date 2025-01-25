@@ -1,7 +1,3 @@
-//
-// Created by Bill Jojo on 1/12/25.
-//
-
 #include "cpl-include.h"
 
 /**
