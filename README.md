@@ -50,9 +50,9 @@ This project attempts to implement CPL as it was available on Primos 21.x.
 &DEBUG    &DO         &ECHO        &ELSE       &END
 &ERROR    &EXECUTE    &EXPAND      &FAIL       &GOTO
 &IF       &IGNORE     &ITEMS       &LABEL      &LIST
-&MESSAGE  &NO_ECHO    &NO_EXECUTE  &NO.RETURN  &NO_WATCH
+&MESSAGE  &NO_ECHO    &NO_EXECUTE  &NO_RETURN  &NO_WATCH
 &ON       &OTHERWISE  &REPEAT      &RESULT     &RETURN
-&REVERT   &ROUTTNE    &SELECT      &SEVERITY   &S1GNAL
+&REVERT   &ROUTTNE    &SELECT      &SEVERITY   &SIGNAL
 &STOP     &THEN       &TO          &TTY        &TTY_CONTINUE
 &UNTTL    &WARNTNG    &WATCH       &WHEN       &WHILE
 ```
