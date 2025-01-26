@@ -1,9 +1,5 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include "cpl-error.h"
 
+#include "cpl-include.h"
 
 const char *UNK_ERROR = "Unknown error.";
 
@@ -90,7 +86,7 @@ const char *get_cpl_error(int err) {
 }
 
 // given the error code, line number, and substitution, print a formatted error.
-void print_cpl_error(int err, int line, const char *subst) {
+void cpl_error_end(int err, int line, const char *subst) {
     fprintf(stderr, "CPL ERROR %d", err);
     if (line > 0)
         fprintf(stderr, " ON LINE %d", line);
@@ -103,4 +99,6 @@ void print_cpl_error(int err, int line, const char *subst) {
     snprintf(s, length, estr, subst);
     fprintf(stderr, "%s\n", s);
     free(s);
+    cpl_shut_it_down();
+    exit(1);
 }

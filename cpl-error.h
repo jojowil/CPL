@@ -8,5 +8,7 @@ typedef struct {
 } CPL_ERROR;
 
 const char *get_cpl_error(int err);
-void print_cpl_error(int err, int line, const char *subst);
+
+void cpl_error_end(int err, int line, const char *subst);
+
 #endif //CPL_CPL_ERROR_H
