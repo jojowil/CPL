@@ -4,10 +4,10 @@
 #include <stddef.h>
 #include "cpl-error.h"
 
-#define NUM_ERRORS 69
+
 const char *UNK_ERROR = "Unknown error.";
 
-CPL_ERROR cpl_errors[NUM_ERRORS] = {
+CPL_ERROR cpl_errors[] = {
         {1,    "An error was encountered while attempting to read the source text of the procedure."},
         {2,    "The token %s was found where the keyword &THEN was expected. All &IF directives must contain a &THEN clause."},
         {3,    "The keyword \"&THEN\" may only be used in the \"&IF\" directive."},
@@ -79,6 +79,8 @@ CPL_ERROR cpl_errors[NUM_ERRORS] = {
         {1021, "The &ARGS directive does not accept numeric option arguments. Option arguments must contain at least one alphabetic character."}
 };
 
+#define NUM_ERRORS sizeof(cpl_errors)/sizeof(cpl_errors[0])
+
 // get the error string from the struct.
 const char *get_cpl_error(int err) {
     for (int x = 0; x < NUM_ERRORS; x++)
@@ -92,7 +94,7 @@ void print_cpl_error(int err, int line, const char *subst) {
     fprintf(stderr, "CPL ERROR %d", err);
     if (line > 0)
         fprintf(stderr, " ON LINE %d", line);
-    fprintf(stderr,".\n");
+    fprintf(stderr, ".\n");
     const char *estr = get_cpl_error(err);
     // get lengths and get temp storage.
     size_t length = strlen(estr) + (subst ? strlen(subst) : 0) + 1;
