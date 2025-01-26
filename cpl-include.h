@@ -1,7 +1,3 @@
-//
-// Created by Bill Jojo on 1/12/25.
-//
-
 #ifndef CPL_CPL_INCLUDE_H
 #define CPL_CPL_INCLUDE_H
 
@@ -19,5 +15,7 @@
 #include "cpl-strings.h"
 #include "cpl-util.h"
 #include "cpl-functions.h"
+#include "cpl-directives.h"
+#include "cpl-vars.h"
 
 #endif //CPL_CPL_INCLUDE_H
