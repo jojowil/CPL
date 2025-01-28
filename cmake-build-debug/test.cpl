@@ -1,5 +1,7 @@
 &args poop
 
-&s x = 10
+&s x := 10
 
-&if [null %poop%] &then
+&if [null %poop%] &then &exit
+
+&print %x% %poop%
