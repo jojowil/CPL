@@ -5,7 +5,7 @@
  * @param fname string filename
  * @return pointer to bytes or NULL
  */
-char *cpl_readAllBytes(const char *fname) {
+char *cpl_readallbytes(const char *fname) {
     FILE *file;
     long fileSize;
     char *buffer;
@@ -37,6 +37,25 @@ char *cpl_readAllBytes(const char *fname) {
     // add the terminator
     buffer[fileSize] = '\0';
     return buffer;
+}
+
+// murder everything...
+void cpl_shut_it_down() {
+    cpl_destroy_all_vars();
+}
+
+int cpl_run(char *file) {
+    char **lines;
+    int numlines = strtolines(file, &lines);
+    // done with this...
+    //printf("%s\n", file);
+    free(file);
+
+    printf("numlines = %d\n", numlines);
+    for (int x = 0; x < numlines; x++)
+        printf("%s", lines[x]);
+    // TODO: Actually run the code!
+
 }
 
 /**
