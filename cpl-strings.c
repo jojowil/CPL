@@ -1,7 +1,3 @@
-//
-// Created by Bill Jojo on 1/12/25.
-//
-
 #include "cpl-include.h"
 
 /**
@@ -13,7 +9,7 @@
  */
 long cpl_strtol(const char *num, int base) {
     char *p;
-    bool success;
+    int success;
     errno = 0;
     long a = strtol(num, &p, base);
     //printf("p = %p, buf = %p, len = %lu, p-buf = %ld\n", p, buf, strlen(buf), p-buf);
@@ -29,7 +25,7 @@ long cpl_strtol(const char *num, int base) {
     return a;
 }
 
-size_t cpl_indexOf(const char *s, const char *p) {
+size_t strindexof(const char *s, const char *p) {
     // test lengths
     size_t sl = strlen(s), pl = strlen(p), x, y;
     if (sl == 0 || pl == 0) return -1;
@@ -48,4 +44,34 @@ size_t cpl_indexOf(const char *s, const char *p) {
         if (y == pl - 1) return x;
     }
     return -1;
+}
+
+char *strtoupper(char *s) {
+    char c, *p = s;
+    while ((c = *p))
+        *p++ = toupper(c);
+    return s;
+}
+
+char *strtolower(char *s) {
+    char c, *p = s;
+    while ((c = *p))
+        *p++ = tolower(c);
+    return s;
+}
+
+int strtolines(const char *chars, char ***lines) {
+    int numlines = 0;
+    char *b, *c = chars;
+
+    while (*c) {
+        b = c;
+        while (*c && *c++ != '\n');
+        size_t len = c - b;
+        if (((*lines)[numlines] = malloc(len + 1)) == NULL)
+            cpl_error_end(1, 0, NULL);
+        memcpy((*lines)[numlines], b, len);
+        (*lines)[numlines++][len] = '\0';
+    }
+    return numlines;
 }
