@@ -1,18 +1,15 @@
-//
-// Created by Bill Jojo on 1/12/25.
-//
-
 #include "cpl-include.h"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
-    char* file;
+    char *file;
+
     if (argc != 2)
         cpl_usage();
-    file = cpl_readAllBytes(argv[1]);
+    file = cpl_readallbytes(argv[1]);
 
-    if (file == NULL) {
-        fprintf(stderr, "Unable to continue...\n");
-        exit(1);
-    }
+    if (file == NULL)
+        cpl_error_end(1, 0, NULL);
+
+    cpl_run(file);
 }

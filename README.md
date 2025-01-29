@@ -73,7 +73,7 @@ WRITE                FILE
 
 The language looks like this:
 
-`&IF %I% = \[MOD \[CALC %A% * %B%] %MODULUS%] &THEN &RETURN`
+`&IF %I% = [MOD [CALC %A% * %B%] %MODULUS%] &THEN &RETURN`
 
 `&if %severity$% = 1 &then &call error_routine`
 
@@ -84,6 +84,6 @@ The language looks like this:
 ```
 
 ```
-&if \[exists %filename%]
-&then \[open_file %filename% -mode status]
+&if [exists %filename%]
+&then [open_file %filename% -mode status]
 ```

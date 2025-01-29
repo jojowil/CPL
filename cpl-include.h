@@ -17,5 +17,6 @@
 #include "cpl-functions.h"
 #include "cpl-directives.h"
 #include "cpl-vars.h"
+#include "cpl-args.h"
 
 #endif //CPL_CPL_INCLUDE_H
