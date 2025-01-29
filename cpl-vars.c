@@ -2,20 +2,41 @@
 
 /* This is a simple linked list lib for managing variables. */
 
-typedef enum {
-    INT, CHAR, CHARL, DATE
-} vartype;
-
 #define VAR_NAME_LEN 33 // 32 chars plus null
+
+struct watch {
+    char name[VAR_NAME_LEN];
+    struct watch *next;
+};
 
 struct variable {
     char name[VAR_NAME_LEN];
-    vartype type;
     char *val;
     struct variable *next;
 };
 
 struct variable *cpl_variables = NULL;
+struct watch *cpl_watchlist = NULL;
+
+// are vars being watched. default is false.
+int WATCH_ON = 0;
+
+// is watch var? O(n)
+int cpl_is_watch(const char *name) {
+    if (!WATCH_ON) return 0;
+    // upcase var name
+    char n[VAR_NAME_LEN];
+    snprintf(n, VAR_NAME_LEN, "%s", name);
+    strtoupper(n);
+
+    struct watch *p = cpl_watchlist;
+    while (p != NULL) {
+        if (strcmp(p->name, n) == 0)
+            return 1;
+        p = p->next;
+    }
+    return 0;
+}
 
 // find a var pointer. O(n)
 struct variable *cpl_find_var(const char *name) {
@@ -23,7 +44,6 @@ struct variable *cpl_find_var(const char *name) {
     char n[VAR_NAME_LEN];
     snprintf(n, VAR_NAME_LEN, "%s", name);
     strtoupper(n);
-
     struct variable *p = cpl_variables;
     while (p != NULL) {
         if (strcmp(p->name, n) == 0)
@@ -33,6 +53,46 @@ struct variable *cpl_find_var(const char *name) {
     return NULL;
 }
 
+// add var to watch. O(1)
+void cpl_set_watch(const char *name) {
+    // get node space
+    struct watch *n;
+    // already on watch?
+    if (cpl_is_watch(name)) return;
+    //set var name
+    snprintf(n->name, VAR_NAME_LEN, "%s", strtoupper(name));
+    // add to list.
+    n->next = cpl_watchlist;
+    cpl_watchlist = n;
+    WATCH_ON = 1;
+}
+
+// remove from watch. O(n)
+void cpl_remove_watch(const char *name) {
+    struct watch *b = NULL, *c = cpl_watchlist;
+    char n[VAR_NAME_LEN];
+    snprintf(n, VAR_NAME_LEN, "%s", name);
+    strtoupper(n);
+    while (c != NULL) {
+        if (strcmp(n, c->name) == 0)
+            break;
+        b = c;
+        c = c->next;
+    }
+    // not found
+    if (c == NULL)
+        return;
+    // first in chain
+    if (b == NULL) {
+        cpl_watchlist = c->next;
+        free(c);
+    } else {
+        b->next = c->next;
+        free(c);
+    }
+}
+
+// add/set var
 void cpl_set_var(const char *name, const char *val) {
     // get node space
     struct variable *n;
@@ -48,8 +108,9 @@ void cpl_set_var(const char *name, const char *val) {
     n->val = malloc(len);
     if (n->val == NULL)
         cpl_error_end(17, 0, name);
-    //set var name
-    snprintf(n->name, VAR_NAME_LEN, "%s", strtoupper(name));
+    // set var name, val
+    snprintf(n->name, VAR_NAME_LEN, "%s", name);
+    strtoupper(n->name);
     snprintf(n->val, len, "%s", val);
     // add to list. O(1)
     n->next = cpl_variables;
@@ -62,13 +123,25 @@ char *cpl_get_var(const char *name) {
     return (n != NULL) ? n->val : NULL;
 }
 
+// destroy all watches.
+void cpl_destroy_all_watches() {
+    struct watch *p;
+    while (cpl_watchlist != NULL) {
+        p = cpl_watchlist;
+        cpl_watchlist = p->next;
+        free(p);
+    }
+    WATCH_ON = 0;
+}
+
 // destroy all variable data.
 void cpl_destroy_all_vars() {
-    struct variable *c, *p = cpl_variables;
-    while (p != NULL) {
+    struct variable *p;
+    while (cpl_variables != NULL) {
+        p = cpl_variables;
         free(p->val);
-        c = p;
-        p = p->next;
-        free(c);
+        cpl_variables = p->next;
+        free(p);
     }
+    cpl_variables = NULL;
 }
