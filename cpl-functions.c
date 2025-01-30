@@ -27,152 +27,209 @@ int is_cpl_function(const char *dir) {
     return 0;
 }
 
+// note that a function is note implemented. non-fatal at this point.
 void func_not_implemented(const char *name) {
     fprintf(stderr, "Function %s is not implemented.\n", name);
 }
 
-char *cpl_abbrev(const char *s) {
-
+// get environment var from user space
+char *f_abbrev(const char *s) {
+    char *v = getenv(s);
+    if (v)
+        return strdup(v);
+    return NULL;
 }
 
-char *cpl_after(const char *s) {
+char *f_after(const char *s, const char *f) {
+    if (s == NULL || f == NULL) return NULL;
+    // find location
+    size_t flen = strlen(f);
+    char *p = strstr(s, f);
+    // get string after
+    return (p) ? strndup(s, strlen(p + flen) + 1) : NULL;
+}
+
+char *f_attrib() {
 
     return NULL;
 }
 
-char *cpl_attrib() {
-
+char *f_before(const char *s, const char *f) {
+    if (s == NULL || f == NULL) return NULL;
+    // find location
+    char *p = strstr(s, f);
+    // get string before
+    return (p) ? strndup(s, p - s) : NULL;
 }
 
-char *cpl_before() {
+char *f_calc() {
 
+    return NULL;
 }
 
-char *cpl_calc() {
-
+char *f_date(const char *s) {
+    // s represents format specifier...
+    return NULL;
 }
 
-char *cpl_date() {
-
+// get dir of a pathname
+char *f_dir(const char *s) {
+    // need to f
+    return NULL;
 }
 
-char *cpl_dir() {
+// get filename of a pathname
+char *f_entryname(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_entryname() {
+// determine if a pathname exists
+char *f_exists(const char *s, const char *t, int b) {
 
+    return strdup("FALSE");
 }
 
-char *cpl_exists() {
-
+// get var value
+char *f_get_var(const char *s) {
+    struct variable *p = cpl_find_var(s);
+    return (p) ? strdup(p->val) : NULL;
 }
 
-char *cpl_get_var() {
-
-}
-
-char *cpl_gvpath() {
+// global var file not implemented. always return "-OFF"
+char *f_gvpath() {
     return strdup("-OFF");
 }
 
-char *cpl_hex(const char *s) {
+char *f_hex(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_index(const char *s, const char *f) {
-
+// find index of f in s. this is 1 based.
+char *f_index(const char *s, const char *f) {
+    if (s == NULL || f == NULL) return NULL;
+    char n[VAR_NAME_LEN];
+    // find location
+    char *p = strstr(s, f);
+    // convert number to string
+    long l = (p) ? p - s + 1 : 0;
+    snprintf(n, VAR_NAME_LEN, "%ld", l);
+    return NULL;
 }
 
-char *cpl_length(const char *s) {
+char *f_length(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_mod(const char *s, const char *t) {
+char *f_mod(const char *s, const char *t) {
 
+    return NULL;
 }
 
-char *cpl_null(const char *s) {
+char *f_null(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_octal(const char *s) {
+char *f_octal(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_open_file(const char *s) {
+char *f_open_file(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_pathname(const char *s) {
+char *f_pathname(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_query(const char *s) {
+char *f_query(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_quote(const char *s) {
+char *f_quote(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_read_file(const char *s) {
+char *f_read_file(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_rescan(const char *s) {
+char *f_rescan(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_response(const char *s) {
+char *f_response(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_resume(const char *s) {
+char *f_resume(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_search(const char *s) {
+char *f_search(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_subst(const char *s) {
+char *f_subst(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_substr(const char *s) {
+char *f_substr(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_to_hex(const char *s) {
+char *f_to_hex(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_to_octal(const char *s) {
+char *f_to_octal(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_translate(const char *s) {
+char *f_translate(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_trim(const char *s) {
+char *f_trim(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_unquote(const char *s) {
+char *f_unquote(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_verify(const char *s) {
+char *f_verify(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_wild(const char *s) {
+char *f_wild(const char *s) {
 
+    return NULL;
 }
 
-char *cpl_write_file(const char *s) {
+char *f_write_file(const char *s) {
 
+    return NULL;
 }
 
