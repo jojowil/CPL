@@ -1,6 +1,19 @@
 #ifndef CPL_CPL_VARS_H
 #define CPL_CPL_VARS_H
 
+#define VAR_NAME_LEN 33 // 32 chars plus null
+
+struct watch {
+    char name[VAR_NAME_LEN];
+    struct watch *next;
+};
+
+struct variable {
+    char name[VAR_NAME_LEN];
+    char *val;
+    struct variable *next;
+};
+
 struct variable *cpl_find_var(const char *name);
 
 void cpl_set_watch(const char *name);

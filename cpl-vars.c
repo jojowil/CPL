@@ -2,19 +2,6 @@
 
 /* This is a simple linked list lib for managing variables. */
 
-#define VAR_NAME_LEN 33 // 32 chars plus null
-
-struct watch {
-    char name[VAR_NAME_LEN];
-    struct watch *next;
-};
-
-struct variable {
-    char name[VAR_NAME_LEN];
-    char *val;
-    struct variable *next;
-};
-
 struct variable *cpl_variables = NULL;
 struct watch *cpl_watchlist = NULL;
 
