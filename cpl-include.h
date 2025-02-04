@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <time.h>
 
 #include "git-banned.h"
 #include "cpl-error.h"
