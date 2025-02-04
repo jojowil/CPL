@@ -43,11 +43,12 @@ struct variable *cpl_find_var(const char *name) {
 // add var to watch. O(1)
 void cpl_set_watch(const char *name) {
     // get node space
-    struct watch *n;
+    struct watch *n = malloc(sizeof(struct watch));
     // already on watch?
     if (cpl_is_watch(name)) return;
     //set var name
-    snprintf(n->name, VAR_NAME_LEN, "%s", strtoupper(name));
+    snprintf(n->name, VAR_NAME_LEN, "%s", name);
+    strtoupper(n->name);
     // add to list.
     n->next = cpl_watchlist;
     cpl_watchlist = n;
