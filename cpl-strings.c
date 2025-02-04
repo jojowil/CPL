@@ -62,7 +62,7 @@ char *strtolower(char *s) {
 
 int strtolines(const char *chars, char ***lines) {
     int numlines = 0;
-    char *b, *c = chars;
+    const char *b, *c = chars;
 
     while (*c) {
         b = c;
