@@ -5,6 +5,9 @@
  * for completeness of functionality.
  */
 
+const char *TRUE = "TRUE";
+const char *FALSE = "FALSE";
+
 const char *cpl_functions[] = {
         "ABBREV|AB", "AFTER", "ATTRIB", "BEFORE", "CALC", "CLOSE",
         "CND_INFO", "DATE", "DIR", "ENTRYNAME", "EXISTS",
@@ -32,7 +35,7 @@ void func_not_implemented(const char *name) {
     fprintf(stderr, "Function %s is not implemented.\n", name);
 }
 
-// get environment var from user space
+// get environment var from user space. Caller must free result.
 char *f_abbrev(const char *s) {
     char *v = getenv(s);
     if (v)
@@ -40,6 +43,7 @@ char *f_abbrev(const char *s) {
     return NULL;
 }
 
+// return string after f. Caller must free result.
 char *f_after(const char *s, const char *f) {
     if (s == NULL || f == NULL) return NULL;
     // find location
@@ -54,6 +58,7 @@ char *f_attrib() {
     return NULL;
 }
 
+// return string before f. Caller must free result.
 char *f_before(const char *s, const char *f) {
     if (s == NULL || f == NULL) return NULL;
     // find location
@@ -67,9 +72,56 @@ char *f_calc() {
     return NULL;
 }
 
-char *f_date(const char *s) {
-    // s represents format specifier...
+char *f_close() {
+
     return NULL;
+}
+
+// NULL is OK. Caller must free result.
+char *f_date(const char *s) {
+    char *fmt, *t = strtoupper(strdup((s) ? s : ""));
+    time_t tt = time(NULL);
+    struct tm buf;
+    char res[VAR_NAME_LEN];
+
+    // fill buf through tt.
+    gmtime_r(&tt, &buf);
+    // TODO: Make these timezone dependent?
+    // s represents format specifier...
+    if (strlen(t) == 0)
+        fmt = "%y-%m-%d";
+    else if (strcmp(t, "-FULL") == 0)
+        fmt = "%y-%m-%d.%T.%a"; // 10/26/89.11:19:00.Tue
+    else if (strcmp(t, "-USA") == 0)
+        fmt = "%D"; // 10/26/89
+    else if (strcmp(t, "-UFULL") == 0)
+        fmt = "%D.%T.%a"; // 10/26/89.11:19:00.Tue
+    else if (strcmp(t, "-VFULL") == 0)
+        fmt = "%d %b %y %T %A"; // 26 Oct 89 11:19:00 Tuesday
+    else if (strcmp(t, "-DAY") == 0)
+        fmt = "%d";
+    else if (strcmp(t, "-MONTH") == 0)
+        fmt = "%B";
+    else if (strcmp(t, "-YEAR") == 0)
+        fmt = "%Y";
+    else if (strcmp(t, "-VIS") == 0)
+        fmt = "%d %b %y"; // 26 Oct 89
+    else if (strcmp(t, "-TIME") == 0)
+        fmt = "%T";
+    else if (strcmp(t, "-AMPM") == 0)
+        fmt = "%I:%M %p"; // 11:19 PM
+    else if (strcmp(t, "-DOW") == 0)
+        fmt = "%A";
+    else if (strcmp(t, "-CAL") == 0)
+        fmt = "%B %d, %Y"; // October 26, 1989
+    else if (strcmp(t, "-TAG") == 0)
+        fmt = "%y%m%d";
+    else if (strcmp(t, "-FTAG") == 0)
+        fmt = "%y%m%d.%H%M%S";
+
+    strftime(res, VAR_NAME_LEN, fmt, &buf);
+    free(t);
+    return strdup(res);
 }
 
 // get dir of a pathname
@@ -84,13 +136,13 @@ char *f_entryname(const char *s) {
     return NULL;
 }
 
-// determine if a pathname exists
+// determine if a pathname exists.  Caller must free result.
 char *f_exists(const char *s, const char *t, int b) {
 
-    return strdup("FALSE");
+    return strdup(FALSE);
 }
 
-// get var value
+// get var value. Caller must free result.
 char *f_get_var(const char *s) {
     struct variable *p = cpl_find_var(s);
     return (p) ? strdup(p->val) : NULL;
@@ -106,21 +158,24 @@ char *f_hex(const char *s) {
     return NULL;
 }
 
-// find index of f in s. this is 1 based.
+// find index of f in s. this is 1 based. Caller must free result.
 char *f_index(const char *s, const char *f) {
     if (s == NULL || f == NULL) return NULL;
     char n[VAR_NAME_LEN];
     // find location
     char *p = strstr(s, f);
     // convert number to string
-    long l = (p) ? p - s + 1 : 0;
-    snprintf(n, VAR_NAME_LEN, "%ld", l);
-    return NULL;
+    size_t l = (p) ? p - s + 1 : 0;
+    snprintf(n, VAR_NAME_LEN, "%lu", l);
+    return strdup(n);
 }
 
+// get length of string. Caller must free result.
 char *f_length(const char *s) {
-
-    return NULL;
+    char n[VAR_NAME_LEN];
+    size_t l = (s) ? strlen(s) : 0;
+    snprintf(n, VAR_NAME_LEN, "%lu", l);
+    return strdup(n);
 }
 
 char *f_mod(const char *s, const char *t) {
