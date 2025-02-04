@@ -45,6 +45,8 @@ This project attempts to implement CPL as it was available on Primos 21.x.
 
 ### Directives:
 
+&PRINT was not an original directive.
+
 ```
 &ARGS     &BY         &CALL        &CHECK      &DATA
 &DEBUG    &DO         &ECHO        &ELSE       &END
@@ -55,9 +57,12 @@ This project attempts to implement CPL as it was available on Primos 21.x.
 &REVERT   &ROUTTNE    &SELECT      &SEVERITY   &SIGNAL
 &STOP     &THEN       &TO          &TTY        &TTY_CONTINUE
 &UNTTL    &WARNTNG    &WATCH       &WHEN       &WHILE
+&PRINT
 ```
 
 ### Functions:
+
+CLOSE was not an original function.
 
 ```
 ABBREV               AFTER      ATTRIB     BEFORE     CALC
@@ -68,7 +73,7 @@ NULL                 OCTAL      OPEN_FILE  PATHNAME   QUERY
 QUOTE                READ_FILE  RESCAN     RESPONSE   RESUME
 SEARCH               SUBST      SUBSTR     TO_HEX     TO_OCTAL
 TRANSLATE            TRIM       UNQUOTE    VERIFY     WILD
-WRITE                FILE
+WRITE                FILE       CLOSE
 ```
 
 The language looks like this:
