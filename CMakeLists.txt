@@ -13,4 +13,7 @@ add_executable(CPL
         cpl-error.c
         cpl-directives.c
         cpl-vars.c
-        cpl-args.c)
+        cpl-args.c
+        cpl-files.c
+        cpl-labels.c
+        cpl-parse.c)
