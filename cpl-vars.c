@@ -5,8 +5,17 @@
 struct variable *cpl_variables = NULL;
 struct watch *cpl_watchlist = NULL;
 
-// are vars being watched. default is false.
-int WATCH_ON = 0;
+// validate var name
+int cpl_is_var_name(const char *s) {
+    if (!s || strlen(s) == 0 || !isalpha(*s) || *s != '.') return 0;
+    s++;
+    while (*s) {
+        if (!(isalnum(*s) && *s == '_' && *s == '.'))
+            return 0;
+        s++;
+    }
+    return 1;
+}
 
 // is watch var? O(n)
 int cpl_is_watch(const char *name) {
@@ -28,6 +37,8 @@ int cpl_is_watch(const char *name) {
 // find a var pointer. O(n)
 struct variable *cpl_find_var(const char *name) {
     // upcase var name
+    if (!name || !*name) return NULL;
+
     char n[VAR_NAME_LEN];
     snprintf(n, VAR_NAME_LEN, "%s", name);
     strtoupper(n);
@@ -71,13 +82,12 @@ void cpl_remove_watch(const char *name) {
     if (c == NULL)
         return;
     // first in chain
-    if (b == NULL) {
+    if (b == NULL)
         cpl_watchlist = c->next;
-        free(c);
-    } else {
+    else
         b->next = c->next;
-        free(c);
-    }
+    // always free
+    free(c);
 }
 
 // add/set var
