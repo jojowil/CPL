@@ -22,6 +22,25 @@ const char *cpl_functions[] = {
 
 #define NUM_FUNC sizeof(cpl_functions)/sizeof(cpl_functions[0])
 
+// converts string to new base. Caller must free result.
+char *base_cvrt(const char *s, int fb, int tb) {
+    char *fmt;
+    if (!s) return NULL;
+    char n[VAR_NAME_LEN];
+    // from base
+    long l = cpl_strtol(s, fb);
+    if (errno) cpl_error_end(5, CPL_LINE_NO, s);
+    // to base
+    if (tb == 8)
+        fmt = "%lo";
+    else if (tb == 10)
+        fmt = "%ld";
+    else if (tb == 16)
+        fmt = "%lX";
+    snprintf(n, VAR_NAME_LEN, fmt, l);
+    return strdup(n);
+}
+
 // is this a function?
 int is_cpl_function(const char *dir) {
     for (int x = 0; x < NUM_FUNC; x++)
@@ -67,13 +86,16 @@ char *f_before(const char *s, const char *f) {
     return (p) ? strndup(s, p - s) : NULL;
 }
 
+// this should also be the core expression eval function.
 char *f_calc() {
 
     return NULL;
 }
 
-char *f_close() {
-
+// close a file fd. no confirmation check. don't care right now.
+char *f_close(const char *fd) {
+    long f = cpl_strtol(fd, 10);
+    cpl_file_close(f);
     return NULL;
 }
 
@@ -85,7 +107,7 @@ char *f_date(const char *s) {
     char res[VAR_NAME_LEN];
 
     // fill buf through tt.
-    gmtime_r(&tt, &buf);
+    localtime_r(&tt, &buf);
     // TODO: Make these timezone dependent?
     // s represents format specifier...
     if (strlen(t) == 0)
@@ -124,19 +146,20 @@ char *f_date(const char *s) {
     return strdup(res);
 }
 
-// get dir of a pathname
+// get dir of a pathname. returns quoted string.
 char *f_dir(const char *s) {
-    // need to f
+    // need to find last pathname separator
+    if (!s) return NULL;
     return NULL;
 }
 
 // get filename of a pathname
 char *f_entryname(const char *s) {
-
+    if (!s) return NULL;
     return NULL;
 }
 
-// determine if a pathname exists.  Caller must free result.
+// determine if a pathname exists. Caller must free result.
 char *f_exists(const char *s, const char *t, int b) {
 
     return strdup(FALSE);
@@ -153,14 +176,14 @@ char *f_gvpath() {
     return strdup("-OFF");
 }
 
+// convert hex string to base 10. Caller must free result.
 char *f_hex(const char *s) {
-
-    return NULL;
+    return base_cvrt(s, 16, 10);
 }
 
 // find index of f in s. this is 1 based. Caller must free result.
 char *f_index(const char *s, const char *f) {
-    if (s == NULL || f == NULL) return NULL;
+    if (!s || !f) return NULL;
     char n[VAR_NAME_LEN];
     // find location
     char *p = strstr(s, f);
@@ -183,17 +206,19 @@ char *f_mod(const char *s, const char *t) {
     return NULL;
 }
 
+// check if NULL or zero length. Caller must free result.
+// TODO: handle quoted string ''.
 char *f_null(const char *s) {
-
-    return NULL;
+    if (!s || !*s) return strdup(TRUE);
+    return strdup(FALSE);
 }
 
+// convert octal string to base 10.
 char *f_octal(const char *s) {
-
-    return NULL;
+    return base_cvrt(s, 8, 10);
 }
 
-char *f_open_file(const char *s) {
+char *f_open_file(const char *f, const char *mode, const char *svar) {
 
     return NULL;
 }
@@ -213,7 +238,9 @@ char *f_quote(const char *s) {
     return NULL;
 }
 
-char *f_read_file(const char *s) {
+char *f_read_file(const char *fd, const char *svar) {
+    int f = (int)cpl_strtol(fd, 10);
+    cpl_get_file(f);
 
     return NULL;
 }
@@ -233,29 +260,27 @@ char *f_resume(const char *s) {
     return NULL;
 }
 
-char *f_search(const char *s) {
+char *f_search(const char *s, const char *chars) {
 
     return NULL;
 }
 
-char *f_subst(const char *s) {
+char *f_subst(const char *s, const char *find, const char *replace) {
 
     return NULL;
 }
 
-char *f_substr(const char *s) {
+char *f_substr(const char *s, const char *start, const char *len) {
 
     return NULL;
 }
 
 char *f_to_hex(const char *s) {
-
-    return NULL;
+    return base_cvrt(s, 10, 16);
 }
 
 char *f_to_octal(const char *s) {
-
-    return NULL;
+    return base_cvrt(s, 10, 8);
 }
 
 char *f_translate(const char *s) {
@@ -263,7 +288,7 @@ char *f_translate(const char *s) {
     return NULL;
 }
 
-char *f_trim(const char *s) {
+char *f_trim(const char *s, const char *dir, char tc) {
 
     return NULL;
 }
@@ -283,7 +308,7 @@ char *f_wild(const char *s) {
     return NULL;
 }
 
-char *f_write_file(const char *s) {
+char *f_write_file(const char *data, const char *fd, const char *svar) {
 
     return NULL;
 }
