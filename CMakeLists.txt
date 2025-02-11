@@ -16,4 +16,5 @@ add_executable(CPL
         cpl-args.c
         cpl-files.c
         cpl-labels.c
-        cpl-parse.c)
+        cpl-parse.c
+        cpl-scanner.c)

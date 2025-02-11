@@ -21,5 +21,6 @@
 #include "cpl-args.h"
 #include "cpl-files.h"
 #include "cpl-parse.h"
+#include "cpl-scanner.h"
 
 #endif //CPL_CPL_INCLUDE_H
