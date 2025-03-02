@@ -6,7 +6,7 @@ struct variable *cpl_variables = NULL;
 struct watch *cpl_watchlist = NULL;
 
 // are vars being watched. default is false.
-static int WATCH_ON;
+int WATCH_ON;
 
 // validate var name
 int cpl_is_var_name(const char *s) {

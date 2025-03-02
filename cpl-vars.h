@@ -3,6 +3,8 @@
 
 #define VAR_NAME_LEN 33 // 32 chars plus null
 
+extern int WATCH_ON;
+
 struct watch {
     char name[VAR_NAME_LEN];
     struct watch *next;
