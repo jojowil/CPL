@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 23)
 
 include_directories(.)
 
-add_executable(CPL
+add_executable(cpl
         cpl-strings.c
         cpl.c
         cpl-util.c
