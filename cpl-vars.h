@@ -3,9 +3,6 @@
 
 #define VAR_NAME_LEN 33 // 32 chars plus null
 
-// are vars being watched. default is false.
-int WATCH_ON;
-
 struct watch {
     char name[VAR_NAME_LEN];
     struct watch *next;
