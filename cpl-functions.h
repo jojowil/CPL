@@ -9,7 +9,7 @@ typedef struct {
 #define UNKOS() sorry_this_is_an_unknown_os
 
 #ifdef _WIN32
-#define DIR_SEP '\'
+#define DIR_SEP '\\'
 #elif __linux__
 #define DIR_SEP '/'
 #elif __APPLE__
