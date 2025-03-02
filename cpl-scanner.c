@@ -83,7 +83,7 @@ static void skipWhitespace() {
                 advance();
                 break;
             case '/':
-                if (peekNext() == '/') {
+                if (peekNext() == '*') {
                     // A comment goes until the end of the line.
                     while (peek() != '\n' && !isAtEnd()) advance();
                 } else {
@@ -198,7 +198,6 @@ Token scanToken() {
         case '+': return makeToken(TOKEN_PLUS);
         case '/': return makeToken(TOKEN_SLASH);
         case '*': return makeToken(TOKEN_STAR);
-//> two-char
         case '!':
             return makeToken(
                     match('=') ? TOKEN_BANG_EQUAL : TOKEN_BANG);
@@ -214,6 +213,5 @@ Token scanToken() {
 
         case '"': return string();
     }
-
     return errorToken("Unexpected character.");
 }

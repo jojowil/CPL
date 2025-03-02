@@ -24,8 +24,6 @@ typedef enum {
 
     TOKEN_ERROR, TOKEN_EOF
 } TokenType;
-//< token-type
-//> token-struct
 
 typedef struct {
     TokenType type;
@@ -33,12 +31,9 @@ typedef struct {
     int length;
     int line;
 } Token;
-//< token-struct
 
 void initScanner(const char* source);
 
 Token scanToken();
-
-#endif
 
 #endif //CPL_CPL_SCANNER_H
