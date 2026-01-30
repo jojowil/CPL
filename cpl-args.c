@@ -1,3 +1,5 @@
+#include "cpl-include.h"
+
 typedef enum {
     AINT, ACHAR, ACHARL, ADATE
 } argtype;
@@ -6,6 +8,7 @@ typedef enum {
 #ifndef CPL_MAIN
 
 int main (void) {
+    printf("Hi!\n");
     return 0;
 }
 

@@ -1,7 +1,9 @@
-#ifndef CPL_CPL_INCLUDE_H
-#define CPL_CPL_INCLUDE_H
+#ifndef CPL_CPL_MAIN_INCLUDE_H
+#define CPL_CPL_MAIN_INCLUDE_H
 
 #include "cpl-include.h"
+
+#define CPL_MAIN
 
 #include "cpl-error.c"
 #include "cpl-strings.c"
@@ -14,4 +16,4 @@
 #include "cpl-parse.c"
 #include "cpl-scanner.c"
 
-#endif //CPL_CPL_INCLUDE_H
+#endif //CPL_CPL_MAIN_INCLUDE_H

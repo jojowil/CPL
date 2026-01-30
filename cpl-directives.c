@@ -1,4 +1,4 @@
-#include <string.h>
+#include "cpl-include.h"
 
 typedef enum {
     ARGS, BY, CALL, CHECK, DATA,
