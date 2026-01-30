@@ -1,5 +1,14 @@
 
-#include "cpl-include.h"
+
+// struct for all errors.
+typedef struct {
+    int error;
+    const char *text;
+} CPL_ERROR;
+
+const char *get_cpl_error(int err);
+
+void cpl_error_end(int err, int line, const char *subst);
 
 const char *UNK_ERROR = "Unknown error.";
 
@@ -102,3 +111,11 @@ void cpl_error_end(int err, int line, const char *subst) {
     cpl_shut_it_down();
     exit(1);
 }
+
+#ifndef CPL_MAIN
+
+int main (void) {
+    return 0;
+}
+
+#endif

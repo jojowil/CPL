@@ -1,5 +1,18 @@
 #include <string.h>
-#include "cpl-directives.h"
+
+typedef enum {
+    ARGS, BY, CALL, CHECK, DATA,
+    DEBUG, DO, ECHO, ELSE, END,
+    ERROR, EXECUTE, EXPAND, FAIL, GOTO,
+    IF, IGNORE, ITEMS, LABEL, LIST,
+    MESSAGE, NO_ECHO, NO_EXECUTE, NO_RETURN, NO_WATCH,
+    ON, OTHERWISE, REPEAT, RESULT, RETURN, REVERT,
+    ROUTINE, SELECT, SET_VAR, SEVERITY, SIGNAL,
+    STOP, THEN, TO, TTY, TTY_CONTINUE,
+    UNTIL, WARNING, WATCH, WHEN, WHILE
+} CPL_DIR;
+
+int is_cpl_directive(const char *dir);
 
 const char *cpl_directives[] = {
         "&ARGS", "&BY", "&CALL", "&CHECK", "&DATA",
@@ -22,3 +35,11 @@ int is_cpl_directive(const char *dir) {
             return x;
     return 0;
 }
+
+#ifndef CPL_MAIN
+
+int main (void) {
+    return 0;
+}
+
+#endif

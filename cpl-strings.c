@@ -1,4 +1,12 @@
-#include "cpl-include.h"
+long cpl_strtol(const char *num, int base);
+
+size_t strindexof(const char *s, const char *p);
+
+char *strtoupper(char *s);
+
+char *strtolower(char *s);
+
+int strtolines(const char *chars, char ***lines);
 
 /**
  * Convert string to long with errors.
@@ -75,3 +83,11 @@ int strtolines(const char *chars, char ***lines) {
     }
     return numlines;
 }
+
+#ifndef CPL_MAIN
+
+int main (void) {
+    return 0;
+}
+
+#endif

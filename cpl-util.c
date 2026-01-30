@@ -1,4 +1,12 @@
-#include "cpl-include.h"
+
+
+char *cpl_readallbytes(const char *fname);
+
+void cpl_usage();
+
+void cpl_shut_it_down();
+
+int cpl_run(char *file);
 
 /**
  * reads all bytes from a given filename
@@ -65,3 +73,11 @@ void cpl_usage() {
     printf("Usage:\tcpl filename.cpl\n");
     exit(255);
 }
+
+#ifndef CPL_MAIN
+
+int main (void) {
+    return 0;
+}
+
+#endif

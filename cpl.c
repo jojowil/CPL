@@ -1,4 +1,8 @@
-#include "cpl-include.h"
+
+#define CPL_MAIN 1
+
+#include "cpl-main-include.h"
+
 
 int main(int argc, char **argv) {
 
